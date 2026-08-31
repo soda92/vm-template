@@ -47,7 +47,7 @@ Flags for 'prepare':
   --verbose         Enable verbose logging output`)
 }
 
-func runInspect(args []string) {
+func runInspect(_ []string) {
 	report, err := sysprep.Inspect()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error inspecting VM: %v\n", err)
