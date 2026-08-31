@@ -191,6 +191,7 @@ func (s *CleanShellHistoryStep) Run(ctx *Context) error {
 			historyFiles = append(historyFiles,
 				filepath.Join("/home", entry.Name(), ".bash_history"),
 				filepath.Join("/home", entry.Name(), ".zsh_history"),
+				filepath.Join("/home", entry.Name(), ".local/share/fish/fish_history"),
 			)
 		}
 	}
