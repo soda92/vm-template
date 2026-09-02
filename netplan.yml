@@ -1,0 +1,30 @@
+# sudo nvim /etc/netplan/00-installer-config.yaml
+# sudo chmod 600 /etc/netplan/*.yaml
+# sudo netplan try
+
+# verify:
+# # # Check assigned IP and interface state
+#     ip addr show ens*
+
+#     # Verify default routing table
+#     ip route show
+
+#     # Verify DNS resolution endpoints
+#     resolvectl status
+
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens160:                  # Replace with your actual interface name (e.g. ens192, ens160, eth0)
+      dhcp4: false
+      dhcp6: false
+      addresses:
+        - 192.168.1.236/24    # Your desired Static IP / Subnet
+      routes:
+        - to: default
+          via: 192.168.1.1   # Your Gateway IP
+      nameservers:
+        addresses:
+          - 192.168.1.200      # DNS Server 1
+          - 1.1.1.1          # DNS Server 2

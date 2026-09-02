@@ -85,6 +85,8 @@ func runPrepare(args []string) {
 		&sysprep.ConfigureNetplanStep{},
 		&sysprep.CleanLogsAndCachesStep{},
 		&sysprep.CleanShellHistoryStep{},
+		&sysprep.SwapoffStep{},
+		&sysprep.SnapperBaselineStep{},
 		&sysprep.PoweroffStep{},
 	)
 

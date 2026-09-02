@@ -202,6 +202,31 @@ func (s *CleanShellHistoryStep) Run(ctx *Context) error {
 	return nil
 }
 
+// SwapoffStep deactivates all active swap spaces.
+type SwapoffStep struct{}
+
+func (s *SwapoffStep) Name() string { return "Disabling active swap devices and files" }
+func (s *SwapoffStep) Run(ctx *Context) error {
+	_ = exec.Command("swapoff", "-a").Run()
+	return nil
+}
+
+// SnapperBaselineStep creates a clean baseline snapshot if snapper is available.
+type SnapperBaselineStep struct{}
+
+func (s *SnapperBaselineStep) Name() string { return "Creating clean baseline Snapper snapshot (if present)" }
+func (s *SnapperBaselineStep) Run(ctx *Context) error {
+	if _, err := exec.LookPath("snapper"); err == nil {
+		cmd := exec.Command("snapper", "-c", "root", "create", "--description", "Golden Template Clean Baseline")
+		if out, err := cmd.CombinedOutput(); err != nil {
+			if ctx.Verbose {
+				fmt.Printf("Snapper snapshot notice: %s (%v)\n", string(out), err)
+			}
+		}
+	}
+	return nil
+}
+
 // PoweroffStep shuts down the system.
 type PoweroffStep struct{}
 
